@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Group2</title>
+    <base href="/" />
+    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="ShopOnline.Web.styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+</head>
+
+<body>
+
+
+    <div id="app">Loading...</div>
+    <script src="https://www.paypal.com/sdk/js?client-id=AUE4_JHuckNvDC8A_D_CDiZJCLxXG-ghrdcqviO85dNTQM3PL-_ozihr9E4gIsK7FlIVqOhgiHI8kFOc&currency=USD" data-sdk-integration-source="button-factory"></script>
+
+    <div id="blazor-error-ui">
+        An unhandled error has occurred.
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD" data-sdk-integration-source="button-factory"></script>
+    <script>
+        function initPayPalButton() {
+            var description = document.querySelector('#smart-button-container #description');
+            var amount = document.querySelector('#smart-button-container #amount');
+
+            var purchase_units = [];
+            purchase_units[0] = {};
+            purchase_units[0].amount = {};
+
+            paypal.Buttons({
+                style: {
+                    color: 'gold',
+                    shape: 'rect',
+                    label: 'paypal',
+                    layout: 'vertical',
+
+                },
+
+                createOrder: function (data, actions) {
+
+                    purchase_units[0].description = description.value;
+                    purchase_units[0].amount.value = amount.value;
+
+                    return actions.order.create({
+                        purchase_units: purchase_units,
+                    });
+                },
+
+                onApprove: function (data, actions) {
+                    return actions.order.capture().then(function (orderData) {
+
+                        // Full available details
+                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+                        // Show a success message within this page, e.g.
+                        const element = document.getElementById('paypal-button-container');
+                        element.innerHTML = '';
+                        element.innerHTML = '<h3>Thank you for your payment!</h3>';
+                        // Or go to another URL:  actions.redirect('thank_you.html');
+
+                    });
+                },
+
+                onError: function (err) {
+                    console.log(err);
+                }
+            }).render('#paypal-button-container');
+        }
+    </script>
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="js/ShoppingCartFunctions.js"></script>
+</body>
+
+<footer style="width: 100%; height: 400px; background-image: linear-gradient(to right, #3a0647, #281152, #3a0647); display: flex; justify-content: space-around; border: 1px solid black ">
+    <div class="ContactUs" style="color: white; margin-top: 20px">
+        <h3>Contact information</h3>
+        <div class="Infor" style="margin-bottom: 10px;">
+            <img src="./Images/ca5b9d22-9b8a-4fe1-9e80-fb1eede276a5.jpg" style="width: 20px; height: 20px; color: wheat; margin-right: 10px" />Location:
+            <a href="#" style="text-decoration: none; color: white">3 Đ. Cầu Giấy, Ngọc Khánh, Đống Đa, Hà Nội, Việt Nam</a>
+        </div>
+
+        <div class="Infor" style="margin-bottom: 10px;">
+            <img src="./Images/75a48d29-6bc5-4e2d-85e9-ee72e8cd7fd7.jpg" style="width: 20px; height: 20px; color: wheat; margin-right: 10px" />Hotline:
+            <a href="#" style="text-decoration: none; color: white">09123876232</a>
+        </div>
+
+        <div class="Infor" style="margin-bottom: 10px;">
+            <img src="./Images/026290f9-1b00-4531-802e-9489b8f21b4d.jpg" style="width: 20px; height: 20px; color: wheat; margin-right: 10px" />Email:
+            <a href="#" style="text-decoration: none; color: white">shopOnline@gmail.com</a>
+        </div>
+
+        <div class="Infor" style="margin-bottom: 10px;">
+            <img src="./Images/026290f9-1b00-4531-802e-9489b8f21b4d.jpg" style="width: 20px; height: 20px; color: wheat; margin-right: 10px" />Website:
+            <a href="https://localhost:7060" style="text-decoration: none; color: white">www.shopOnline.com</a>
+        </div>
+
+        <div class="Logo" style="margin-top: 40px">
+            <img src="./Images/888d07de-b66e-4142-98d0-e0a109a293bd.jpg" style="width: fit-content; height: 60px">
+        </div>
+    </div>
+
+    <div class="ourLocation" style="width: 40%; height: 300px; margin-right: -20px">
+        <div class="Infor" style="margin-bottom: 10px;">
+
+            <p style="color: white; margin-top: 20px">
+                <img src="./Images/066e87f0-7762-4950-a976-7c7ba3f9d40d.jpg" style="width: 20px; height: 20px; color: wheat; margin-right: 10px" />
+                Search location here:
+            </p>
+        </div>
+
+        <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.2.0/mapbox-gl-directions.js"></script>
+        <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.2.0/mapbox-gl-directions.css" type="text/css">
+        <div id='map' style='width: 100%; height: 100%; float: right'></div>
+        <script>
+            mapboxgl.accessToken = 'pk.eyJ1IjoiZGF0dHVuYSIsImEiOiJjbHVhc3d0aDMwaXZkMmtta3poN3EwODFqIn0.81IejJrfLjBGsgiw_6YyaA';
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/mapbox/streets-v11',
+                center: [105.80286, 21.02779],
+                zoom: 15
+            });
+
+            const marker = new mapboxgl.Marker({
+                color: "red",
+                draggable: true
+            }).setLngLat([105.80293, 21.02796])
+                .addTo(map);
+            const nav = new mapboxgl.NavigationControl();
+            map.addControl(nav, 'bottom-right');
+
+            //Set user location
+            map.addControl(new mapboxgl.GeolocateControl({
+                positionOptions: {
+                    enableHighAccuracy: true
+
+                },
+                trackUserLocation: true,
+                showUserHeading: true
+            }));
+
+            //Set fullscreen button
+            map.addControl(new mapboxgl.FullscreenControl({ container: document.querySelector('body') }));
+
+            //Click marker
+            map.on('click', function (e) {
+                new mapboxgl.Marker({
+                    color: 'red',
+                    draggable: false,
+
+                }).setLngLat([e.lngLat.lng, e.lngLat.lat])
+                    .addTo(map);
+            });
+
+            //add mapbox direction
+            map.addControl(
+                new MapboxDirections({
+                    accessToken: mapboxgl.accessToken
+                }),
+                'top-left'
+            );
+        </script>
+    </div>
+
+    <div class="SocialMedia">
+        <h3 style="color: white; margin-top: 20px">Social media</h3>
+        <div class="Infor">
+            <img src="./Images/e0171af9-0f55-417e-98a0-0910d1896e5e.jpg" style="width: 20px; height: 20px; color: wheat; margin-right: 5px" />
+            <a href="https://www.facebook.com/" style="text-decoration: none; color: white">Facebook</a>
+        </div>
+
+        <div class="Infor" style=" margin: 14px 0">
+            <img src="./Images/33840e7c-e8fd-4552-8ea0-b940253ee6a8.jpg" style="width: 20px; height: 20px; color: wheat; margin-right: 5px" />
+            <a href="https://www.instagram.com/" style="text-decoration: none; color: white">Instagram</a>
+        </div>
+
+        <div class="Infor">
+            <img src="./Images/37d1d6fc-8dd5-49aa-abf2-1f5dedc1387f.jpg" style="width: 20px; height: 20px; color: wheat; margin-right: 5px" />
+            <a href="https://www.youtube.com/" style="text-decoration: none; color: white">Youtube</a>
+        </div>
+
+    </div>
+</footer>
+
+</html>
